@@ -83,10 +83,27 @@ def edit_card_route(card_id):
     return render_template('edit_form.html', card=card)
 
 
+
 @app.route('/')
 def index():
+
     cards_response = supabase.table('cards').select('*').execute()
     cards = cards_response.data if cards_response.data else []
+
+    #Rarity map so that display table does the right thing ayy
+    rarity_map = {
+        "CM": "Common",
+        "UC": "Uncommon",
+        "RR": "Rare",
+        "HR": "Holo Rare",
+        "UR": "Ultra Rare",
+        "SR": "Secret Rare"
+    }
+
+    # Replace rarity codes with display names
+    for card in cards:
+        if "rarity" in card and card["rarity"] in rarity_map:
+            card["rarity"] = rarity_map[card["rarity"]]
     return render_template('index.html', cards=cards)
 
 
