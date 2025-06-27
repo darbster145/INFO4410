@@ -56,3 +56,75 @@ body {
   input[type="submit"]:hover {
     background-color: #0056b3;
   }
+  .container {
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: center;
+  }
+  
+  .card-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .card-list li {
+    margin: 12px 0;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .btn-link {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* For home/index layout */
+.home-container {
+  text-align: center;
+  margin-top: 12vh;
+  padding: 0 20px;
+}
+
+.home-container h1 {
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+}
+
+.home-container h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* Button group styling */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+/* Main button styles */
+.nav-button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}

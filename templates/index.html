@@ -2,49 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Card Catalogue</title>
-  <link rel="stylesheet" href="static/FormStyles.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 100px;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 50px;
-    }
-
-    .button-container {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-    }
-
-    .nav-button {
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      background-color: #007BFF;
-      color: white;
-      transition: background-color 0.3s ease;
-      text-decoration: none;
-    }
-
-    .nav-button:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <title>We've Never Met: Card Inventory</title>
+  <link rel="stylesheet" href="/static/FormStyles.css">
 </head>
 <body>
-  <h1>Welcome to the Card Catalogue</h1>
+  <div class="home-container">
+    <h1>We've Never Met: Card Inventory</h1>
+    <h2>What do you wanna do?</h2>
 
-  <div class="button-container">
-    <a href="/addcard" class="nav-button">Add Card</a>
-    <a href="/addcard" class="nav-button">Edit Card</a> <!-- later: EditForm.html -->
+    <div class="button-container">
+      <a href="/addcard" class="nav-button">Add Card</a>
+      <a href="/edit" class="nav-button">Edit Card</a>
+    </div>
   </div>
 </body>
 </html>
+

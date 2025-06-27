@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Card - {{ card.card_name }}</title>
+  <link rel="stylesheet" href="/static/FormStyles.css">
+</head>
+<body>
+  <div class="form-container">
+    <h2>Edit Card - {{ card.card_name }}</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flash-messages">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+      <label for="card_name">Card Name:</label>
+      <input type="text" id="card_name" name="card_name" value="{{ card.card_name }}" required>
+
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" rows="4">{{ card.description }}</textarea>
+
+      <label for="rarity">Rarity:</label>
+      <select id="rarity" name="rarity">
+        <option value="CM" {% if card.rarity == "CM" %}selected{% endif %}>Common</option>
+        <option value="UC" {% if card.rarity == "UC" %}selected{% endif %}>Uncommon</option>
+        <option value="RR" {% if card.rarity == "RR" %}selected{% endif %}>Rare</option>
+        <option value="HR" {% if card.rarity == "HR" %}selected{% endif %}>Holo Rare</option>
+        <option value="UR" {% if card.rarity == "UR" %}selected{% endif %}>Ultra Rare</option>
+        <option value="SR" {% if card.rarity == "SR" %}selected{% endif %}>Secret Rare</option>
+      </select>
+
+      <label for="card_price">Price ($):</label>
+      <input type="number" step="0.01" id="card_price" name="card_price" value="{{ card.card_price }}">
+
+      <label for="set_name">Set Name:</label>
+      <input type="text" id="set_name" name="set_name" value="{{ card.set_name }}">
+
+      <label for="img_url">Image URL:</label>
+      <input type="text" id="img_url" name="img_url" value="{{ card.img_url }}">
+
+      <input type="submit" value="Save Changes">
+    </form>
+  </div>
+</body>
+</html>

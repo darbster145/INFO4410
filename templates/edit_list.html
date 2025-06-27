@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Cards</title>
+  <link rel="stylesheet" href="/static/FormStyles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Edit Cards</h1>
+    <ul class="card-list">
+      {% for card in cards %}
+        <li>
+          <span>{{ card.card_name }}</span>
+          <a href="{{ url_for('edit_card_route', card_id=card.card_id) }}" class="btn-link">Edit</a>
+        </li>
+      {% else %}
+        <li>No cards found.</li>
+      {% endfor %}
+    </ul>
+    <p><a href="{{ url_for('index') }}" class="btn-link">Back to Home</a></p>
+  </main>
+</body>
+</html>
