@@ -1,6 +1,6 @@
 
 
-  <h1>We've Never Met: Card Catalogue</h1>
+  <h1>We've Never Met: Card inventory tracker/manager thing</h1>
   <p>This is all the code so far...you'll need to clone the repo locally and run the app.py file locally to view the webapp</p>
 
   <h2>1. Clone the Repository</h2>
