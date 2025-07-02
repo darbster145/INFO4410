@@ -78,9 +78,39 @@ def edit_card_route(card_id):
         flash('Card not found.', 'error')
         return redirect(url_for('edit_card_list_route'))
 
+    # Extract current image filename from URL for display
+    current_img_url = card.get('img_url', '')
+    current_img_filename = ''
+    if current_img_url:
+        # Assuming URL format ends with the filename
+        current_img_filename = current_img_url.split('/')[-1]
+
     if request.method == 'POST':
         if 'cancel' in request.form:
             return redirect(url_for('edit_card_list_route'))
+
+        # Handle new image upload
+        image = request.files.get('image')
+        new_img_url = current_img_url  # default keep old image url
+
+        if image and image.filename != '':
+            original_filename = secure_filename(image.filename)
+            ext = original_filename.rsplit('.', 1)[-1] if '.' in original_filename else ''
+            unique_filename = f"{uuid.uuid4()}.{ext}" if ext else str(uuid.uuid4())
+            path_on_storage = unique_filename
+
+            file_bytes = image.read()
+
+            try:
+                supabase.storage.from_(STORAGE_BUCKET).upload(
+                    path_on_storage,
+                    file_bytes,
+                    {"content-type": image.content_type}
+                )
+                new_img_url = f"{SUPABASE_URL}/storage/v1/object/public/{STORAGE_BUCKET}/{path_on_storage}"
+            except Exception as e:
+                flash(f"Image upload failed: {e}", "error")
+                return redirect(url_for('edit_card_route', card_id=card_id))
 
         updated_card = {
             'card_name': request.form['card_name'],
@@ -88,7 +118,7 @@ def edit_card_route(card_id):
             'rarity': request.form['rarity'],
             'card_price': float(request.form['card_price']),
             'set_name': request.form['set_name'],
-            'img_url': request.form['img_url']  # Assuming this is still a manual field
+            'img_url': new_img_url
         }
 
         update_response = supabase.table('cards').update(updated_card).eq('card_id', card_id).execute()
@@ -100,7 +130,7 @@ def edit_card_route(card_id):
 
         return redirect(url_for('edit_card_list_route'))
 
-    return render_template('edit_form.html', card=card)
+    return render_template('edit_form.html', card=card, current_img_filename=current_img_filename)
 
 
 @app.route('/')

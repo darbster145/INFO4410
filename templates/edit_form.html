@@ -19,7 +19,7 @@
       {% endif %}
     {% endwith %}
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <label for="card_name">Card Name:</label>
       <input type="text" id="card_name" name="card_name" value="{{ card.card_name }}" required>
 
@@ -42,10 +42,18 @@
       <label for="set_name">Set Name:</label>
       <input type="text" id="set_name" name="set_name" value="{{ card.set_name }}">
 
-      <label for="img_url">Image URL:</label>
-      <input type="text" id="img_url" name="img_url" value="{{ card.img_url }}">
+      <label>Current Image Filename:</label>
+      <p>{{ current_img_filename if current_img_filename else "No image uploaded" }}</p>
+
+      {% if card.img_url %}
+        <img src="{{ card.img_url }}" alt="Card Image" style="max-width:200px; margin-bottom: 1em;">
+      {% endif %}
+
+      <label for="image">Upload New Image (optional):</label>
+      <input type="file" id="image" name="image" accept="image/*">
 
       <input type="submit" value="Save Changes">
+      <button type="submit" name="cancel" value="cancel">Cancel</button>
     </form>
   </div>
 </body>
