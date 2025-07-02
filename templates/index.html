@@ -27,12 +27,19 @@
         <tbody>
           {% for card in cards %}
             <tr>
-              {% for value in card.values() %}
-                <td>{{ value }}</td>
+              {% for key, value in card.items() %}
+                <td>
+                  {% if key == "img_url" and value %}
+                    <img src="{{ value }}" alt="Card Image" width="100">
+                  {% else %}
+                    {{ value }}
+                  {% endif %}
+                </td>
               {% endfor %}
             </tr>
           {% endfor %}
         </tbody>
+        
       </table>
     {% else %}
       <p>No cards found in the inventory.</p>

@@ -19,7 +19,8 @@
       {% endif %}
     {% endwith %}
 
-    <form method="POST" action="/addcard">
+    <!-- ✅ Add enctype to support file uploads -->
+    <form method="POST" action="/addcard" enctype="multipart/form-data">
       <label for="cardName">Card Name:</label>
       <input type="text" id="cardName" name="cardName" required>
 
@@ -42,6 +43,10 @@
 
       <label for="setName">Set Name:</label>
       <input type="text" id="setName" name="setName">
+
+      <!-- ✅ New field: upload card image -->
+      <label for="image">Card Image:</label>
+      <input type="file" id="image" name="image" accept="image/*" required>
 
       <input type="submit" value="Add Card">
     </form>
