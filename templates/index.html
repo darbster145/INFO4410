@@ -14,7 +14,25 @@
       <a href="/addcard" class="nav-button">Add Card</a>
       <a href="/edit" class="nav-button">Edit Card</a>
     </div>
+    <form method="GET" action="{{ url_for('index') }}" class="search-sort-form">
+      <input type="text" name="search" placeholder="Search cards..." value="{{ request.args.get('search', '') }}">
+      
+      <label for="sort_by__filters">Filters:</label>
+      <select name="sort_by_price" id="sort_by_price">
+        <option value="">-- Select --</option>
+        <option value="price_asc" {% if request.args.get('sort_by') == 'price_asc' %}selected{% endif %}>Low to High</option>
+        <option value="price_desc" {% if request.args.get('sort_by') == 'price_desc' %}selected{% endif %}>High to Low</option>
+      </select>
+      <select name="sort_by_rarity" id="sort_by_rarity">
+        <option value="">-- Select --</option>
+        <option value="rairty_" {% if request.args.get('sort_by') == 'price_asc' %}selected{% endif %}>Low to High</option>
+        <option value="price_desc" {% if request.args.get('sort_by') == 'price_desc' %}selected{% endif %}>High to Low</option>
+      </select>
 
+      <button type="submit">Apply</button>
+    </form>
+
+    </div>
     {% if cards %}
       <table>
         <thead>

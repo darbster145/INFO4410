@@ -42,7 +42,7 @@ def add_card_form():
 
         card_data = {
             'card_name': request.form['cardName'],
-            'description': request.form['description'],
+            'oracle_text': request.form['oracle_text'],
             'rarity': request.form['rarity'],
             'card_price': float(request.form['cardPrice']),
             'set_name': request.form['setName'],
@@ -135,9 +135,29 @@ def edit_card_route(card_id):
 
 @app.route('/')
 def index():
+    search_query = request.args.get('search', '').lower()
+    sort_by = request.args.get('sort_by')
+
+    # Get all cards from Supabase
     cards_response = supabase.table('cards').select('*').execute()
     cards = cards_response.data if cards_response.data else []
 
+    # 🔍 Filter by search query (name, description, set)
+    if search_query:
+        cards = [
+            card for card in cards
+            if search_query in card.get('card_name', '').lower()
+            or search_query in card.get('oracle_text', '').lower()
+            or search_query in card.get('set_name', '').lower()
+        ]
+
+    # 💸 Sort by price
+    if sort_by == 'price_asc':
+        cards.sort(key=lambda x: x.get('card_price', 0))
+    elif sort_by == 'price_desc':
+        cards.sort(key=lambda x: x.get('card_price', 0), reverse=True)
+
+    # (Optional: Convert rarity codes for display)
     rarity_map = {
         "CM": "Common",
         "UC": "Uncommon",
@@ -150,8 +170,10 @@ def index():
     for card in cards:
         if "rarity" in card and card["rarity"] in rarity_map:
             card["rarity"] = rarity_map[card["rarity"]]
+
     return render_template('index.html', cards=cards)
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
