@@ -1,5 +1,4 @@
-from flask import Flask, render_template_string, request, redirect, url_for
-
+from flask import Flask, render_template, render_template_string, request, redirect, url_for
 app = Flask(__name__)
 
 # Magic: The Gathering card data
@@ -104,6 +103,29 @@ def edit_card(card_id):
         return redirect(url_for('index'))
 
     return render_template_string(template, cards=cards, card_to_edit=card)
+
+
+# Helper function to get card by ID
+def get_card_by_id(card_id):
+    return next(({
+        "id": c[0],
+        "name": c[1],
+        "description": c[2],
+        "rarity": c[3],
+        "price": c[4],
+        "edition": c[5],
+        "image_url": f"/static/{c[6]}",
+        "inventory_code": c[7],
+        "condition": c[8],
+        "store_location": c[9]
+    } for c in cards if c[0] == card_id), None)
+
+@app.route("/card/<int:card_id>")
+def show_card(card_id):
+    card = get_card_by_id(card_id)
+    if not card:
+        return "<h1>Card not found</h1>", 404
+    return render_template("LandingPage_Customer.html", card=card)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
