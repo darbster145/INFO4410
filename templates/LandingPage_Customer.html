@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ card.name }} - Card Details</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='LandingPage_Customer.css') }}"></head>
+<body>
+  <div class="card-container">
+    <div class="card-image">
+      <img src="{{ card.image_url }}" alt="{{ card.name }}">
+    </div>
+
+    <div class="card-details">
+      <h1>{{ card.name }}</h1>
+      <p class="description">{{ card.description }}</p>
+      <ul class="stats">
+        <li><strong>Edition:</strong> {{ card.edition }}</li>
+        <li><strong>Rarity:</strong> {{ card.rarity }}</li>
+        <li><strong>Condition:</strong> {{ card.condition }}</li>
+        <li><strong>Store:</strong> {{ card.store_location }}</li>
+        <li><strong>Price:</strong> ${{ card.price }}</li>
+        <li><strong>Inventory Code:</strong> {{ card.inventory_code }}</li>
+      </ul>
+    </div>
+  </div>
+</body>
+</html>
