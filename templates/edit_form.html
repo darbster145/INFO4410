@@ -23,8 +23,26 @@
       <label for="card_name">Card Name:</label>
       <input type="text" id="card_name" name="card_name" value="{{ card.card_name }}" required>
 
-      <label for="description">Description:</label>
-      <textarea id="description" name="description" rows="4">{{ card.description }}</textarea>
+      <label for="oracle_text">Description:</label>
+      <textarea id="oracle_text" name="oracle_text" rows="4">{{ card.oracle_text }}</textarea>
+
+      <label for="mana_cost">Mana Cost:</label>
+      <input type="text" id="mana_cost" name="mana_cost" value="{{ card.mana_cost }}">
+
+      <label for="cmc">CMC (Converted Mana Cost):</label>
+      <input type="number" step="0.01" id="cmc" name="cmc" value="{{ card.cmc }}">
+
+      <label for="colors">Colors (comma-separated):</label>
+      <input type="text" id="colors" name="colors" value="{{ card.colors }}">
+
+      <label for="type_line">Type Line:</label>
+      <input type="text" id="type_line" name="type_line" value="{{ card.type_line }}">
+
+      <label for="power">Power:</label>
+      <input type="text" id="power" name="power" value="{{ card.power }}">
+
+      <label for="toughness">Toughness:</label>
+      <input type="text" id="toughness" name="toughness" value="{{ card.toughness }}">
 
       <label for="rarity">Rarity:</label>
       <select id="rarity" name="rarity">
@@ -41,6 +59,9 @@
 
       <label for="set_name">Set Name:</label>
       <input type="text" id="set_name" name="set_name" value="{{ card.set_name }}">
+
+      <label for="language">Language:</label>
+      <input type="text" id="language" name="language" value="{{ card.language or 'English' }}">
 
       <label>Current Image Filename:</label>
       <p>{{ current_img_filename if current_img_filename else "No image uploaded" }}</p>

@@ -41,13 +41,20 @@ def add_card_form():
                 image_url = ""
 
         card_data = {
-            'card_name': request.form['cardName'],
-            'oracle_text': request.form['oracle_text'],
-            'rarity': request.form['rarity'],
-            'card_price': float(request.form['cardPrice']),
-            'set_name': request.form['setName'],
-            'img_url': image_url
-        }
+    'card_name': request.form.get('card_name'),
+    'oracle_text': request.form.get('oracle_text'),
+    'rarity': request.form.get('rarity'),
+    'card_price': float(request.form.get('card_price') or 0),
+    'set_name': request.form.get('set_name'),
+    'mana_cost': request.form.get('mana_cost'),
+    'cmc': float(request.form.get('cmc') or 0),
+    'colors': request.form.get('colors'),
+    'type_line': request.form.get('type_line'),
+    'power': request.form.get('power'),
+    'toughness': request.form.get('toughness'),
+    'language': request.form.get('language'),
+    'img_url': image_url  # or card['img_url'] if no new image uploaded
+}
 
         result = add_card(card_data)
 
@@ -55,6 +62,7 @@ def add_card_form():
             flash("Error adding card. No data returned.", "error")
         else:
             flash("Card added successfully!", "success")
+            return redirect(url_for('index'))
 
         return redirect('/addcard')
 
@@ -113,13 +121,21 @@ def edit_card_route(card_id):
                 return redirect(url_for('edit_card_route', card_id=card_id))
 
         updated_card = {
-            'card_name': request.form['card_name'],
-            'description': request.form['description'],
-            'rarity': request.form['rarity'],
-            'card_price': float(request.form['card_price']),
-            'set_name': request.form['set_name'],
-            'img_url': new_img_url
-        }
+    'card_name': request.form.get('card_name'),
+    'oracle_text': request.form.get('oracle_text'),
+    'rarity': request.form.get('rarity'),
+    'card_price': float(request.form.get('card_price') or 0),
+    'set_name': request.form.get('set_name'),
+    'mana_cost': request.form.get('mana_cost'),
+    'cmc': float(request.form.get('cmc') or 0),
+    'colors': request.form.get('colors'),
+    'type_line': request.form.get('type_line'),
+    'power': request.form.get('power'),
+    'toughness': request.form.get('toughness'),
+    'language': request.form.get('language'),
+    'img_url': new_img_url  # or card['img_url'] if no new image uploaded
+}
+
 
         update_response = supabase.table('cards').update(updated_card).eq('card_id', card_id).execute()
 
