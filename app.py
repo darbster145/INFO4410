@@ -77,6 +77,7 @@ def edit_card_list_route():
     return render_template('edit_list.html', cards=cards)
 
 
+
 @app.route('/edit/<int:card_id>', methods=['GET', 'POST'])
 def edit_card_route(card_id):
     response = supabase.table('cards').select('*').eq('card_id', card_id).execute()
@@ -148,11 +149,33 @@ def edit_card_route(card_id):
 
     return render_template('edit_form.html', card=card, current_img_filename=current_img_filename)
 
+@app.route('/delete')
+def delete_card_list():
+    response = supabase.table('cards').select('*').execute()
+    cards = response.data if response.data else []
+    return render_template('delete_form.html', cards=cards)
+
+@app.route('/delete/<int:card_id>', methods=['POST'])
+def delete_card(card_id):
+    try:
+        # Attempt to delete the card with the matching ID
+        response = supabase.table('cards').delete().eq('card_id', card_id).execute()
+
+        if response.data:
+            flash("Card deleted successfully!", "success")
+        else:
+            flash("Card not found or already deleted.", "error")
+
+    except Exception as e:
+        flash(f"Error deleting card: {e}", "error")
+
+    return redirect(url_for('delete_card_list'))
+
 
 @app.route('/')
 def index():
     search_query = request.args.get('search', '').lower()
-    sort_by = request.args.get('sort_by')
+    sort_by_price = request.args.get('sort_by_price')
 
     # Get all cards from Supabase
     cards_response = supabase.table('cards').select('*').execute()
@@ -168,9 +191,9 @@ def index():
         ]
 
     # 💸 Sort by price
-    if sort_by == 'price_asc':
+    if sort_by_price == 'price_asc':
         cards.sort(key=lambda x: x.get('card_price', 0))
-    elif sort_by == 'price_desc':
+    elif sort_by_price == 'price_desc':
         cards.sort(key=lambda x: x.get('card_price', 0), reverse=True)
 
     # (Optional: Convert rarity codes for display)
@@ -189,6 +212,10 @@ def index():
 
     return render_template('index.html', cards=cards)
 
+
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

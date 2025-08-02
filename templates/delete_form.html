@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edit Cards</title>
+  <link rel="stylesheet" href="/static/FormStyles.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Delete Cards</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flash-messages">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <ul class="card-list">
+      {% for card in cards %}
+        <li>
+          <span>{{ card.card_name }}</span>
+          <form method="POST" action="{{ url_for('delete_card', card_id=card.card_id) }}" style="display:inline;">
+                <button type="submit">Delete</button>
+          </form>
+        </li>
+      {% else %}
+        <li>No cards found.</li>
+      {% endfor %}
+    </ul>
+    <p><a href="{{ url_for('admin') }}" class="btn-link">Admin</a></p>
+  </main>
+</body>
+</html>
